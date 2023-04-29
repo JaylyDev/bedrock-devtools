@@ -8,7 +8,7 @@ interface BlockState {
 
 export const getBlockState = (block: Block, player: Player): BlockState | undefined => {
   // When player clicks on a block, show block property in action bar i.e 'selected "age": 0'
-  const blockStates = block.permutation.getAllProperties();
+  const blockStates = block.permutation.getAllStates();
   const statesKeys = Object.keys(blockStates);
 
   if (statesKeys.length > 0) {

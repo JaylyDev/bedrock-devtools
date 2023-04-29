@@ -2,7 +2,7 @@ import { world } from "@minecraft/server";
 import * as biome from "./biome";
 import * as changeDimension from "./changeDimension";
 
-world.events.beforeChat.subscribe((event) => {
+world.beforeEvents.chatSend.subscribe((event) => {
   const { message } = event;
   /**
    * Arguments in string array.

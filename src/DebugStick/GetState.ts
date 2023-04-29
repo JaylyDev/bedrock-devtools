@@ -36,7 +36,7 @@ world.events.entityHit.subscribe((event) => {
       }
       
       const newState = validStates[entity.stateIndex];
-      const newStateValue = hitBlock.permutation.getProperty(newState);
+      const newStateValue = hitBlock.permutation.getState(newState);
 
       entity.onScreenDisplay.setActionBar(`selected "${newState}": ${newStateValue}`);
     }
@@ -44,7 +44,7 @@ world.events.entityHit.subscribe((event) => {
       entity.blockType = hitBlock.typeId;
       entity.stateIndex = 0;
       const currentState = validStates[entity.stateIndex];
-      const currentStateValue = hitBlock.permutation.getProperty(currentState);
+      const currentStateValue = hitBlock.permutation.getState(currentState);
 
       entity.onScreenDisplay.setActionBar(`selected "${currentState}": ${currentStateValue}`);
     };

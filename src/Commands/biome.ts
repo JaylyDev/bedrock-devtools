@@ -1,4 +1,4 @@
-import { BeforeChatEvent, Player, world } from "@minecraft/server";
+import { ChatSendBeforeEvent, Player, world } from "@minecraft/server";
 
 enum Biome {
   ocean = 0,
@@ -180,16 +180,16 @@ const biomeObjectiveId = "jayly:biome";
 const showErrorMessage = (player: Player) => player.sendMessage("§cFailed to retrieve current biome you're in.");
 const showResult = (player: Player, biome: string) => player.sendMessage(`Biome: §a${biome}`);
 
-export function execute(event: BeforeChatEvent) {
+export function execute(event: ChatSendBeforeEvent) {
   const { sender } = event;
   event.cancel = true;
 
   const biomeObjective = world.scoreboard.getObjective(biomeObjectiveId);
-  if (!sender.scoreboard) {
+  if (!sender.scoreboardIdentity) {
     showErrorMessage(sender);
     return;
   }
-  const biome = biomeObjective.getScore(sender.scoreboard) as Biome;
+  const biome = biomeObjective.getScore(sender.scoreboardIdentity) as Biome;
 
   // Check if player is in valid biomes, if not throw error.
   if (Object.keys(BiomeLocale).includes(biome.toString())) showResult(sender, BiomeLocale[biome]);
