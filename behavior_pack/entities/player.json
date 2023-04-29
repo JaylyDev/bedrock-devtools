@@ -1,0 +1,371 @@
+{
+  "format_version": "1.18.20",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "minecraft:player",
+      "is_spawnable": false,
+      "is_summonable": false,
+      "is_experimental": false
+    },
+
+    "component_groups": {
+      "minecraft:add_bad_omen": {
+        "minecraft:spell_effects": {
+          "add_effects": [
+            {
+              "effect": "bad_omen",
+              "duration": 6000,
+              "visible": false,
+              "display_on_screen_animation": true
+            }
+          ]
+        },
+        "minecraft:timer": {
+          "time": [0.0, 0.0],
+          "looping": false,
+          "time_down_event": {
+            "event": "minecraft:clear_add_bad_omen",
+            "target": "self"
+          }
+        }
+      },
+      "minecraft:clear_bad_omen_spell_effect": {
+        "minecraft:spell_effects": {}
+      },
+      "minecraft:raid_trigger": {
+        "minecraft:raid_trigger": {
+          "triggered_event": {
+            "event": "minecraft:remove_raid_trigger",
+            "target": "self"
+          }
+        },
+        "minecraft:spell_effects": {
+          "remove_effects": "bad_omen"
+        }
+      }
+    },
+
+    "components": {
+      "minecraft:experience_reward": {
+        "on_death": "Math.Min(query.player_level * 7, 100)"
+      },
+      "minecraft:type_family": {
+        "family": ["player"]
+      },
+      "minecraft:is_hidden_when_invisible": {},
+      "minecraft:loot": {
+        "table": "loot_tables/empty.json"
+      },
+      "minecraft:collision_box": {
+        "width": 0.6,
+        "height": 1.8
+      },
+      "minecraft:can_climb": {},
+      "minecraft:movement": {
+        "value": 0.1
+      },
+      "minecraft:hurt_on_condition": {
+        "damage_conditions": [
+          {
+            "filters": {
+              "test": "in_lava",
+              "subject": "self",
+              "operator": "==",
+              "value": true
+            },
+            "cause": "lava",
+            "damage_per_tick": 4
+          }
+        ]
+      },
+      "minecraft:attack": {
+        "damage": 1
+      },
+      "minecraft:exhaustion_values": {
+        "heal": 6,
+        "jump": 0.05,
+        "sprint_jump": 0.2,
+        "mine": 0.005,
+        "attack": 0.1,
+        "damage": 0.1,
+        "walk": 0.0,
+        "sprint": 0.1,
+        "swim": 0.01
+      },
+      "minecraft:player.saturation": {
+        "value": 5,
+        "max": 20
+      },
+      "minecraft:player.exhaustion": {
+        "value": 0,
+        "max": 20
+      },
+      "minecraft:player.level": {
+        "value": 0,
+        "max": 24791
+      },
+      "minecraft:player.experience": {
+        "value": 0,
+        "max": 1
+      },
+      "minecraft:breathable": {
+        "total_supply": 15,
+        "suffocate_time": -1,
+        "inhale_time": 3.75,
+        "generates_bubbles": false
+      },
+      "minecraft:nameable": {
+        "always_show": true,
+        "allow_name_tag_renaming": false
+      },
+      "minecraft:physics": {
+        "push_towards_closest_space": true
+      },
+      "minecraft:pushable": {
+        "is_pushable": false,
+        "is_pushable_by_piston": true
+      },
+      "minecraft:insomnia": {
+        "days_until_insomnia": 3
+      },
+      "minecraft:rideable": {
+        "seat_count": 2,
+        "family_types": ["parrot_tame"],
+        "pull_in_entities": true,
+        "seats": [
+          {
+            "position": [0.4, -0.2, -0.1],
+            "min_rider_count": 0,
+            "max_rider_count": 0,
+            "lock_rider_rotation": 0
+          },
+          {
+            "position": [-0.4, -0.2, -0.1],
+            "min_rider_count": 1,
+            "max_rider_count": 2,
+            "lock_rider_rotation": 0
+          }
+        ]
+      },
+      "minecraft:conditional_bandwidth_optimization": {},
+      "minecraft:block_climber": {},
+      "minecraft:environment_sensor": {
+        "triggers": [
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_mob_effect",
+                  "subject": "self",
+                  "value": "bad_omen"
+                },
+                {
+                  "test": "is_in_village",
+                  "subject": "self",
+                  "value": true
+                }
+              ]
+            },
+            "event": "minecraft:trigger_raid"
+          },
+          { "filters": { "test": "has_biome_tag", "value": "ocean" }, "event": "jayly:expose_biome_ocean" },
+          { "filters": { "test": "has_biome_tag", "value": "legacy_frozen_ocean" }, "event": "jayly:expose_biome_legacy_frozen_ocean" },
+          { "filters": { "test": "has_biome_tag", "value": "deep_ocean" }, "event": "jayly:expose_biome_deep_ocean" },
+          { "filters": { "test": "has_biome_tag", "value": "frozen_ocean" }, "event": "jayly:expose_biome_frozen_ocean" },
+          { "filters": { "test": "has_biome_tag", "value": "deep_frozen_ocean" }, "event": "jayly:expose_biome_deep_frozen_ocean" },
+          { "filters": { "test": "has_biome_tag", "value": "cold_ocean" }, "event": "jayly:expose_biome_cold_ocean" },
+          { "filters": { "test": "has_biome_tag", "value": "deep_cold_ocean" }, "event": "jayly:expose_biome_deep_cold_ocean" },
+          { "filters": { "test": "has_biome_tag", "value": "lukewarm_ocean" }, "event": "jayly:expose_biome_lukewarm_ocean" },
+          { "filters": { "test": "has_biome_tag", "value": "deep_lukewarm_ocean" }, "event": "jayly:expose_biome_deep_lukewarm_ocean" },
+          { "filters": { "test": "has_biome_tag", "value": "warm_ocean" }, "event": "jayly:expose_biome_warm_ocean" },
+          { "filters": { "test": "has_biome_tag", "value": "deep_warm_ocean" }, "event": "jayly:expose_biome_deep_warm_ocean" },
+          { "filters": { "test": "has_biome_tag", "value": "river" }, "event": "jayly:expose_biome_river" },
+          { "filters": { "test": "has_biome_tag", "value": "frozen_river" }, "event": "jayly:expose_biome_frozen_river" },
+          { "filters": { "test": "has_biome_tag", "value": "beach" }, "event": "jayly:expose_biome_beach" },
+          { "filters": { "test": "has_biome_tag", "value": "stone_beach" }, "event": "jayly:expose_biome_stone_beach" },
+          { "filters": { "test": "has_biome_tag", "value": "cold_beach" }, "event": "jayly:expose_biome_cold_beach" },
+          { "filters": { "test": "has_biome_tag", "value": "forest" }, "event": "jayly:expose_biome_forest" },
+          { "filters": { "test": "has_biome_tag", "value": "forest_hills" }, "event": "jayly:expose_biome_forest_hills" },
+          { "filters": { "test": "has_biome_tag", "value": "flower_forest" }, "event": "jayly:expose_biome_flower_forest" },
+          { "filters": { "test": "has_biome_tag", "value": "birch_forest" }, "event": "jayly:expose_biome_birch_forest" },
+          { "filters": { "test": "has_biome_tag", "value": "birch_forest_hills" }, "event": "jayly:expose_biome_birch_forest_hills" },
+          { "filters": { "test": "has_biome_tag", "value": "birch_forest_mutated" }, "event": "jayly:expose_biome_birch_forest_mutated" },
+          { "filters": { "test": "has_biome_tag", "value": "birch_forest_hills_mutated" }, "event": "jayly:expose_biome_birch_forest_hills_mutated" },
+          { "filters": { "test": "has_biome_tag", "value": "roofed_forest" }, "event": "jayly:expose_biome_roofed_forest" },
+          { "filters": { "test": "has_biome_tag", "value": "roofed_forest_mutated" }, "event": "jayly:expose_biome_roofed_forest_mutated" },
+          { "filters": { "test": "has_biome_tag", "value": "jungle" }, "event": "jayly:expose_biome_jungle" },
+          { "filters": { "test": "has_biome_tag", "value": "jungle_hills" }, "event": "jayly:expose_biome_jungle_hills" },
+          { "filters": { "test": "has_biome_tag", "value": "jungle_mutated" }, "event": "jayly:expose_biome_jungle_mutated" },
+          { "filters": { "test": "has_biome_tag", "value": "jungle_edge" }, "event": "jayly:expose_biome_jungle_edge" },
+          { "filters": { "test": "has_biome_tag", "value": "jungle_edge_mutated" }, "event": "jayly:expose_biome_jungle_edge_mutated" },
+          { "filters": { "test": "has_biome_tag", "value": "bamboo_jungle" }, "event": "jayly:expose_biome_bamboo_jungle" },
+          { "filters": { "test": "has_biome_tag", "value": "bamboo_jungle_hills" }, "event": "jayly:expose_biome_bamboo_jungle_hills" },
+          { "filters": { "test": "has_biome_tag", "value": "taiga" }, "event": "jayly:expose_biome_taiga" },
+          { "filters": { "test": "has_biome_tag", "value": "taiga_hills" }, "event": "jayly:expose_biome_taiga_hills" },
+          { "filters": { "test": "has_biome_tag", "value": "taiga_mutated" }, "event": "jayly:expose_biome_taiga_mutated" },
+          { "filters": { "test": "has_biome_tag", "value": "cold_taiga" }, "event": "jayly:expose_biome_cold_taiga" },
+          { "filters": { "test": "has_biome_tag", "value": "cold_taiga_hills" }, "event": "jayly:expose_biome_cold_taiga_hills" },
+          { "filters": { "test": "has_biome_tag", "value": "cold_taiga_mutated" }, "event": "jayly:expose_biome_cold_taiga_mutated" },
+          { "filters": { "test": "has_biome_tag", "value": "mega_taiga" }, "event": "jayly:expose_biome_mega_taiga" },
+          { "filters": { "test": "has_biome_tag", "value": "mega_taiga_hills" }, "event": "jayly:expose_biome_mega_taiga_hills" },
+          { "filters": { "test": "has_biome_tag", "value": "redwood_taiga_mutated" }, "event": "jayly:expose_biome_redwood_taiga_mutated" },
+          { "filters": { "test": "has_biome_tag", "value": "redwood_taiga_hills_mutated" }, "event": "jayly:expose_biome_redwood_taiga_hills_mutated" },
+          { "filters": { "test": "has_biome_tag", "value": "mushroom_island" }, "event": "jayly:expose_biome_mushroom_island" },
+          { "filters": { "test": "has_biome_tag", "value": "mushroom_island_shore" }, "event": "jayly:expose_biome_mushroom_island_shore" },
+          { "filters": { "test": "has_biome_tag", "value": "swampland" }, "event": "jayly:expose_biome_swampland" },
+          { "filters": { "test": "has_biome_tag", "value": "swampland_mutated" }, "event": "jayly:expose_biome_swampland_mutated" },
+          { "filters": { "test": "has_biome_tag", "value": "savanna" }, "event": "jayly:expose_biome_savanna" },
+          { "filters": { "test": "has_biome_tag", "value": "savanna_plateau" }, "event": "jayly:expose_biome_savanna_plateau" },
+          { "filters": { "test": "has_biome_tag", "value": "savanna_mutated" }, "event": "jayly:expose_biome_savanna_mutated" },
+          { "filters": { "test": "has_biome_tag", "value": "savanna_plateau_mutated" }, "event": "jayly:expose_biome_savanna_plateau_mutated" },
+          { "filters": { "test": "has_biome_tag", "value": "plains" }, "event": "jayly:expose_biome_plains" },
+          { "filters": { "test": "has_biome_tag", "value": "sunflower_plains" }, "event": "jayly:expose_biome_sunflower_plains" },
+          { "filters": { "test": "has_biome_tag", "value": "desert" }, "event": "jayly:expose_biome_desert" },
+          { "filters": { "test": "has_biome_tag", "value": "desert_hills" }, "event": "jayly:expose_biome_desert_hills" },
+          { "filters": { "test": "has_biome_tag", "value": "desert_mutated" }, "event": "jayly:expose_biome_desert_mutated" },
+          { "filters": { "test": "has_biome_tag", "value": "ice_plains" }, "event": "jayly:expose_biome_ice_plains" },
+          { "filters": { "test": "has_biome_tag", "value": "ice_mountains" }, "event": "jayly:expose_biome_ice_mountains" },
+          { "filters": { "test": "has_biome_tag", "value": "ice_plains_spikes" }, "event": "jayly:expose_biome_ice_plains_spikes" },
+          { "filters": { "test": "has_biome_tag", "value": "extreme_hills" }, "event": "jayly:expose_biome_extreme_hills" },
+          { "filters": { "test": "has_biome_tag", "value": "extreme_hills_plus_trees" }, "event": "jayly:expose_biome_extreme_hills_plus_trees" },
+          { "filters": { "test": "has_biome_tag", "value": "extreme_hills_mutated" }, "event": "jayly:expose_biome_extreme_hills_mutated" },
+          { "filters": { "test": "has_biome_tag", "value": "extreme_hills_plus_trees_mutated" }, "event": "jayly:expose_biome_extreme_hills_plus_trees_mutated" },
+          { "filters": { "test": "has_biome_tag", "value": "extreme_hills_edge" }, "event": "jayly:expose_biome_extreme_hills_edge" },
+          { "filters": { "test": "has_biome_tag", "value": "mesa" }, "event": "jayly:expose_biome_mesa" },
+          { "filters": { "test": "has_biome_tag", "value": "mesa_plateau" }, "event": "jayly:expose_biome_mesa_plateau" },
+          { "filters": { "test": "has_biome_tag", "value": "mesa_plateau_mutated" }, "event": "jayly:expose_biome_mesa_plateau_mutated" },
+          { "filters": { "test": "has_biome_tag", "value": "mesa_plateau_stone" }, "event": "jayly:expose_biome_mesa_plateau_stone" },
+          { "filters": { "test": "has_biome_tag", "value": "mesa_plateau_stone_mutated" }, "event": "jayly:expose_biome_mesa_plateau_stone_mutated" },
+          { "filters": { "test": "has_biome_tag", "value": "mesa_bryce" }, "event": "jayly:expose_biome_mesa_bryce" },
+          { "filters": { "test": "has_biome_tag", "value": "meadow" }, "event": "jayly:expose_biome_meadow" },
+          { "filters": { "test": "has_biome_tag", "value": "grove" }, "event": "jayly:expose_biome_grove" },
+          { "filters": { "test": "has_biome_tag", "value": "snowy_slopes" }, "event": "jayly:expose_biome_snowy_slopes" },
+          { "filters": { "test": "has_biome_tag", "value": "jagged_peaks" }, "event": "jayly:expose_biome_jagged_peaks" },
+          { "filters": { "test": "has_biome_tag", "value": "frozen_peaks" }, "event": "jayly:expose_biome_frozen_peaks" },
+          { "filters": { "test": "has_biome_tag", "value": "stony_peaks" }, "event": "jayly:expose_biome_stony_peaks" },
+          { "filters": { "test": "has_biome_tag", "value": "lush_caves" }, "event": "jayly:expose_biome_lush_caves" },
+          { "filters": { "test": "has_biome_tag", "value": "dripstone_caves" }, "event": "jayly:expose_biome_dripstone_caves" },
+          { "filters": { "test": "has_biome_tag", "value": "deep_dark" }, "event": "jayly:expose_biome_deep_dark" },
+          { "filters": { "test": "has_biome_tag", "value": "mangrove_swamp" }, "event": "jayly:expose_biome_mangrove_swamp" },
+          { "filters": { "test": "has_biome_tag", "value": "hell" }, "event": "jayly:expose_biome_hell" },
+          { "filters": { "test": "has_biome_tag", "value": "crimson_forest" }, "event": "jayly:expose_biome_crimson_forest" },
+          { "filters": { "test": "has_biome_tag", "value": "warped_forest" }, "event": "jayly:expose_biome_warped_forest" },
+          { "filters": { "test": "has_biome_tag", "value": "soulsand_valley" }, "event": "jayly:expose_biome_soulsand_valley" },
+          { "filters": { "test": "has_biome_tag", "value": "basalt_deltas" }, "event": "jayly:expose_biome_basalt_deltas" },
+          { "filters": { "test": "has_biome_tag", "value": "the_end" }, "event": "jayly:expose_biome_the_end" }
+        ]
+      }
+    },
+
+    "events": {
+      "minecraft:gain_bad_omen": {
+        "add": {
+          "component_groups": ["minecraft:add_bad_omen"]
+        }
+      },
+      "minecraft:clear_add_bad_omen": {
+        "remove": {
+          "component_groups": ["minecraft:add_bad_omen"]
+        },
+        "add": {
+          "component_groups": ["minecraft:clear_bad_omen_spell_effect"]
+        }
+      },
+      "minecraft:trigger_raid": {
+        "add": {
+          "component_groups": ["minecraft:raid_trigger"]
+        }
+      },
+      "minecraft:remove_raid_trigger": {
+        "remove": {
+          "component_groups": ["minecraft:raid_trigger"]
+        }
+      },
+      "jayly:expose_biome_ocean": {"run_command":{"command":["scoreboard players set @s jayly:biome 0"]}},
+      "jayly:expose_biome_legacy_frozen_ocean": {"run_command":{"command":["scoreboard players set @s jayly:biome 10"]}},
+      "jayly:expose_biome_deep_ocean": {"run_command":{"command":["scoreboard players set @s jayly:biome 24"]}},
+      "jayly:expose_biome_frozen_ocean": {"run_command":{"command":["scoreboard players set @s jayly:biome 46"]}},
+      "jayly:expose_biome_deep_frozen_ocean": {"run_command":{"command":["scoreboard players set @s jayly:biome 47"]}},
+      "jayly:expose_biome_cold_ocean": {"run_command":{"command":["scoreboard players set @s jayly:biome 44"]}},
+      "jayly:expose_biome_deep_cold_ocean": {"run_command":{"command":["scoreboard players set @s jayly:biome 45"]}},
+      "jayly:expose_biome_lukewarm_ocean": {"run_command":{"command":["scoreboard players set @s jayly:biome 42"]}},
+      "jayly:expose_biome_deep_lukewarm_ocean": {"run_command":{"command":["scoreboard players set @s jayly:biome 43"]}},
+      "jayly:expose_biome_warm_ocean": {"run_command":{"command":["scoreboard players set @s jayly:biome 40"]}},
+      "jayly:expose_biome_deep_warm_ocean": {"run_command":{"command":["scoreboard players set @s jayly:biome 41"]}},
+      "jayly:expose_biome_river": {"run_command":{"command":["scoreboard players set @s jayly:biome 7"]}},
+      "jayly:expose_biome_frozen_river": {"run_command":{"command":["scoreboard players set @s jayly:biome 11"]}},
+      "jayly:expose_biome_beach": {"run_command":{"command":["scoreboard players set @s jayly:biome 16"]}},
+      "jayly:expose_biome_stone_beach": {"run_command":{"command":["scoreboard players set @s jayly:biome 25"]}},
+      "jayly:expose_biome_cold_beach": {"run_command":{"command":["scoreboard players set @s jayly:biome 26"]}},
+      "jayly:expose_biome_forest": {"run_command":{"command":["scoreboard players set @s jayly:biome 4"]}},
+      "jayly:expose_biome_forest_hills": {"run_command":{"command":["scoreboard players set @s jayly:biome 18"]}},
+      "jayly:expose_biome_flower_forest": {"run_command":{"command":["scoreboard players set @s jayly:biome 132"]}},
+      "jayly:expose_biome_birch_forest": {"run_command":{"command":["scoreboard players set @s jayly:biome 27"]}},
+      "jayly:expose_biome_birch_forest_hills": {"run_command":{"command":["scoreboard players set @s jayly:biome 28"]}},
+      "jayly:expose_biome_birch_forest_mutated": {"run_command":{"command":["scoreboard players set @s jayly:biome 155"]}},
+      "jayly:expose_biome_birch_forest_hills_mutated": {"run_command":{"command":["scoreboard players set @s jayly:biome 156"]}},
+      "jayly:expose_biome_roofed_forest": {"run_command":{"command":["scoreboard players set @s jayly:biome 29"]}},
+      "jayly:expose_biome_roofed_forest_mutated": {"run_command":{"command":["scoreboard players set @s jayly:biome 157"]}},
+      "jayly:expose_biome_jungle": {"run_command":{"command":["scoreboard players set @s jayly:biome 21"]}},
+      "jayly:expose_biome_jungle_hills": {"run_command":{"command":["scoreboard players set @s jayly:biome 22"]}},
+      "jayly:expose_biome_jungle_mutated": {"run_command":{"command":["scoreboard players set @s jayly:biome 149"]}},
+      "jayly:expose_biome_jungle_edge": {"run_command":{"command":["scoreboard players set @s jayly:biome 23"]}},
+      "jayly:expose_biome_jungle_edge_mutated": {"run_command":{"command":["scoreboard players set @s jayly:biome 151"]}},
+      "jayly:expose_biome_bamboo_jungle": {"run_command":{"command":["scoreboard players set @s jayly:biome 48"]}},
+      "jayly:expose_biome_bamboo_jungle_hills": {"run_command":{"command":["scoreboard players set @s jayly:biome 49"]}},
+      "jayly:expose_biome_taiga": {"run_command":{"command":["scoreboard players set @s jayly:biome 5"]}},
+      "jayly:expose_biome_taiga_hills": {"run_command":{"command":["scoreboard players set @s jayly:biome 19"]}},
+      "jayly:expose_biome_taiga_mutated": {"run_command":{"command":["scoreboard players set @s jayly:biome 133"]}},
+      "jayly:expose_biome_cold_taiga": {"run_command":{"command":["scoreboard players set @s jayly:biome 30"]}},
+      "jayly:expose_biome_cold_taiga_hills": {"run_command":{"command":["scoreboard players set @s jayly:biome 31"]}},
+      "jayly:expose_biome_cold_taiga_mutated": {"run_command":{"command":["scoreboard players set @s jayly:biome 158"]}},
+      "jayly:expose_biome_mega_taiga": {"run_command":{"command":["scoreboard players set @s jayly:biome 32"]}},
+      "jayly:expose_biome_mega_taiga_hills": {"run_command":{"command":["scoreboard players set @s jayly:biome 33"]}},
+      "jayly:expose_biome_redwood_taiga_mutated": {"run_command":{"command":["scoreboard players set @s jayly:biome 160"]}},
+      "jayly:expose_biome_redwood_taiga_hills_mutated": {"run_command":{"command":["scoreboard players set @s jayly:biome 161"]}},
+      "jayly:expose_biome_mushroom_island": {"run_command":{"command":["scoreboard players set @s jayly:biome 14"]}},
+      "jayly:expose_biome_mushroom_island_shore": {"run_command":{"command":["scoreboard players set @s jayly:biome 15"]}},
+      "jayly:expose_biome_swampland": {"run_command":{"command":["scoreboard players set @s jayly:biome 6"]}},
+      "jayly:expose_biome_swampland_mutated": {"run_command":{"command":["scoreboard players set @s jayly:biome 134"]}},
+      "jayly:expose_biome_savanna": {"run_command":{"command":["scoreboard players set @s jayly:biome 35"]}},
+      "jayly:expose_biome_savanna_plateau": {"run_command":{"command":["scoreboard players set @s jayly:biome 36"]}},
+      "jayly:expose_biome_savanna_mutated": {"run_command":{"command":["scoreboard players set @s jayly:biome 163"]}},
+      "jayly:expose_biome_savanna_plateau_mutated": {"run_command":{"command":["scoreboard players set @s jayly:biome 164"]}},
+      "jayly:expose_biome_plains": {"run_command":{"command":["scoreboard players set @s jayly:biome 1"]}},
+      "jayly:expose_biome_sunflower_plains": {"run_command":{"command":["scoreboard players set @s jayly:biome 129"]}},
+      "jayly:expose_biome_desert": {"run_command":{"command":["scoreboard players set @s jayly:biome 2"]}},
+      "jayly:expose_biome_desert_hills": {"run_command":{"command":["scoreboard players set @s jayly:biome 17"]}},
+      "jayly:expose_biome_desert_mutated": {"run_command":{"command":["scoreboard players set @s jayly:biome 130"]}},
+      "jayly:expose_biome_ice_plains": {"run_command":{"command":["scoreboard players set @s jayly:biome 12"]}},
+      "jayly:expose_biome_ice_mountains": {"run_command":{"command":["scoreboard players set @s jayly:biome 13"]}},
+      "jayly:expose_biome_ice_plains_spikes": {"run_command":{"command":["scoreboard players set @s jayly:biome 140"]}},
+      "jayly:expose_biome_extreme_hills": {"run_command":{"command":["scoreboard players set @s jayly:biome 3"]}},
+      "jayly:expose_biome_extreme_hills_plus_trees": {"run_command":{"command":["scoreboard players set @s jayly:biome 34"]}},
+      "jayly:expose_biome_extreme_hills_mutated": {"run_command":{"command":["scoreboard players set @s jayly:biome 131"]}},
+      "jayly:expose_biome_extreme_hills_plus_trees_mutated": {"run_command":{"command":["scoreboard players set @s jayly:biome 162"]}},
+      "jayly:expose_biome_extreme_hills_edge": {"run_command":{"command":["scoreboard players set @s jayly:biome 20"]}},
+      "jayly:expose_biome_mesa": {"run_command":{"command":["scoreboard players set @s jayly:biome 37"]}},
+      "jayly:expose_biome_mesa_plateau": {"run_command":{"command":["scoreboard players set @s jayly:biome 39"]}},
+      "jayly:expose_biome_mesa_plateau_mutated": {"run_command":{"command":["scoreboard players set @s jayly:biome 167"]}},
+      "jayly:expose_biome_mesa_plateau_stone": {"run_command":{"command":["scoreboard players set @s jayly:biome 38"]}},
+      "jayly:expose_biome_mesa_plateau_stone_mutated": {"run_command":{"command":["scoreboard players set @s jayly:biome 166"]}},
+      "jayly:expose_biome_mesa_bryce": {"run_command":{"command":["scoreboard players set @s jayly:biome 165"]}},
+      "jayly:expose_biome_meadow": {"run_command":{"command":["scoreboard players set @s jayly:biome 186"]}},
+      "jayly:expose_biome_grove": {"run_command":{"command":["scoreboard players set @s jayly:biome 185"]}},
+      "jayly:expose_biome_snowy_slopes": {"run_command":{"command":["scoreboard players set @s jayly:biome 184"]}},
+      "jayly:expose_biome_jagged_peaks": {"run_command":{"command":["scoreboard players set @s jayly:biome 182"]}},
+      "jayly:expose_biome_frozen_peaks": {"run_command":{"command":["scoreboard players set @s jayly:biome 183"]}},
+      "jayly:expose_biome_stony_peaks": {"run_command":{"command":["scoreboard players set @s jayly:biome 189"]}},
+      "jayly:expose_biome_lush_caves": {"run_command":{"command":["scoreboard players set @s jayly:biome 187"]}},
+      "jayly:expose_biome_dripstone_caves": {"run_command":{"command":["scoreboard players set @s jayly:biome 188"]}},
+      "jayly:expose_biome_deep_dark": {"run_command":{"command":["scoreboard players set @s jayly:biome 190"]}},
+      "jayly:expose_biome_mangrove_swamp": {"run_command":{"command":["scoreboard players set @s jayly:biome 191"]}},
+      "jayly:expose_biome_hell": {"run_command":{"command":["scoreboard players set @s jayly:biome 8"]}},
+      "jayly:expose_biome_crimson_forest": {"run_command":{"command":["scoreboard players set @s jayly:biome 179"]}},
+      "jayly:expose_biome_warped_forest": {"run_command":{"command":["scoreboard players set @s jayly:biome 180"]}},
+      "jayly:expose_biome_soulsand_valley": {"run_command":{"command":["scoreboard players set @s jayly:biome 178"]}},
+      "jayly:expose_biome_basalt_deltas": {"run_command":{"command":["scoreboard players set @s jayly:biome 181"]}},
+      "jayly:expose_biome_the_end": {"run_command":{"command":["scoreboard players set @s jayly:biome 9"]}}
+    }
+  }
+}

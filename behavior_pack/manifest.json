@@ -1,0 +1,32 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Bedrock DevTools",
+    "description": "Bedrock Developer Tools Add-On (0.1.0-beta)",
+    "uuid": "19e999f7-186d-44cd-8f98-46318d3341b6",
+    "version": "1.19.80",
+    "min_engine_version": [1, 19, 80]
+  },
+  "modules": [
+    {
+      "type": "script",
+      "uuid": "2a3e0f37-b501-4056-af53-d34d6676e281",
+      "version": "0.1.0-beta",
+      "description": "behaviorPack.devtools.description",
+      "language": "javascript",
+      "entry": "scripts/Main.js"
+    },
+    {
+      "type": "data",
+      "description": "behaviorPack.devtools.description",
+      "uuid": "6e8d6473-395b-4fbc-b156-8a65076255aa",
+      "version": [0, 1, 0]
+    }
+  ],
+  "dependencies": [
+    {
+      "module_name": "@minecraft/server",
+      "version": "1.2.0-beta"
+    }
+  ]
+}

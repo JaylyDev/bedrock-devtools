@@ -1,0 +1,23 @@
+{
+  "name": "bedrock-devtools",
+  "version": "0.1.0-beta",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@minecraft/server": "^1.2.0-beta.1.19.80-stable",
+    "@minecraft/vanilla-data": "^1.20.0-preview.21"
+  },
+  "devDependencies": {
+    "source-map": "^0.7.4",
+    "ts-loader": "^9.4.2",
+    "webpack": "^5.81.0",
+    "webpack-cli": "^5.0.2"
+  }
+}

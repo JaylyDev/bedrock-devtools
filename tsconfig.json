@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./behavior_pack/scripts",
+
+    "pretty": true,
+    "lib": ["es2020"],
+    "target": "es2020",
+    "module": "es2020",
+    "moduleResolution": "node",
+
+    "noEmitOnError": true,
+
+    "strict": true,
+    "strictBindCallApply": false,
+    "useUnknownInCatchVariables": false,
+    "noImplicitOverride": true,
+
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "allowUnusedLabels": false,
+
+    "skipLibCheck": true,
+
+    "alwaysStrict": true,
+    "preserveConstEnums": true,
+    "newLine": "lf",
+
+    "types": [],
+    "sourceMap": true,
+  },
+  "include": ["src"],
+  "exclude": ["scripts", "node_modules"]
+}
