@@ -4,7 +4,7 @@ import { DebugStick } from "./DebugStick";
 import { errorText, playerCanUseDebugStick } from "../PlayerData";
 
 // Using entityHit to listen for the stick being hit on a block
-world.events.entityHit.subscribe((event) => {
+world.afterEvents.entityHit.subscribe((event) => {
   const { entity, hitBlock } = event;
   if (!(entity instanceof Player) || !hitBlock) return;
   if (!playerCanUseDebugStick(entity)) {
@@ -15,7 +15,7 @@ world.events.entityHit.subscribe((event) => {
   const inventory = entity.getComponent(EntityInventoryComponent.componentId) as EntityInventoryComponent;
   const selectedItem = inventory.container.getItem(entity.selectedSlot);
 
-  if (selectedItem?.typeId !== DebugStick) throw new Error("Hehehe hahahah");
+  if (selectedItem?.typeId !== DebugStick) return;
 
   const blockState = getBlockState(hitBlock, entity);
   

@@ -1,4 +1,5 @@
-import { ChatSendBeforeEvent, Player, world } from "@minecraft/server";
+import { Player, world } from "@minecraft/server";
+import { ChatCommandBuilder, CommandResponse } from "./handler";
 
 enum Biome {
   ocean = 0,
@@ -180,9 +181,8 @@ const biomeObjectiveId = "jayly:biome";
 const showErrorMessage = (player: Player) => player.sendMessage("§cFailed to retrieve current biome you're in.");
 const showResult = (player: Player, biome: string) => player.sendMessage(`Biome: §a${biome}`);
 
-export function execute(event: ChatSendBeforeEvent) {
-  const { sender } = event;
-  event.cancel = true;
+export function execute(response: CommandResponse<{}>) {
+  const { sender } = response;
 
   const biomeObjective = world.scoreboard.getObjective(biomeObjectiveId);
   if (!sender.scoreboardIdentity) {
@@ -196,8 +196,13 @@ export function execute(event: ChatSendBeforeEvent) {
   else showErrorMessage(sender);
 };
 
+export const data = new ChatCommandBuilder()
+  .withName("!biome")
+  .withDescription("Get the biome player is currently in.")
+  .withPermission(true);
+
 // register scoreboard on world initialize
-world.events.worldInitialize.subscribe(() => {
+world.afterEvents.worldInitialize.subscribe(() => {
   world.scoreboard.getObjective(biomeObjectiveId) ??
     world.scoreboard.addObjective(biomeObjectiveId, biomeObjectiveId);
 });

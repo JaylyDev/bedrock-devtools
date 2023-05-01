@@ -1,3 +1,3 @@
 import "./DebugStick/GetState";
 import "./DebugStick/ChangeState";
-import "./Commands/handler";
+import "./Commands/index";
