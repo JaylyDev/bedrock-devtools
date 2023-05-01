@@ -16,6 +16,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: $GITHUB_REF
 
       - name: Setup node
         uses: actions/setup-node@v3
@@ -26,7 +28,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: PyInstaller build
+      - name: Add-On build
         run: npm run build
 
       - name: Create Release Asset
