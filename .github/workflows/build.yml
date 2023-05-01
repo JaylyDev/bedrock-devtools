@@ -1,0 +1,50 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Build
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Add-On build
+        run: npm run build
+
+      - name: Create Release Asset
+        run: |
+          built_path=bedrock-devtools_${{ github.event.release.tag_name }}.mcpack
+          echo "BUILT_PATH=$built_path" >> $GITHUB_ENV
+          cd behavior_pack
+          zip -r $built_path .
+          cd ..
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./behavior_pack/${{ env.BUILT_PATH }}
+          asset_name: ${{ env.BUILT_PATH }}
+          asset_content_type: application/zip
