@@ -15,7 +15,7 @@ world.events.entityHit.subscribe((event) => {
   const inventory = entity.getComponent(EntityInventoryComponent.componentId) as EntityInventoryComponent;
   const selectedItem = inventory.container.getItem(entity.selectedSlot);
 
-  if (selectedItem?.typeId !== DebugStick) throw new Error("Hehehe hahahah");
+  if (selectedItem?.typeId !== DebugStick) return;
 
   const blockState = getBlockState(hitBlock, entity);
   
