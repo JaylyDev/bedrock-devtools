@@ -102,6 +102,13 @@ function registerChatCommand<T extends Record<string, CommandArgumentData>>(comm
     command = command.build();
   };
 
+  // Check if command data parameters are filled out
+  if (!command.name) throw new Error(`Name of the command is missing when registering.`);
+  else if (!command.description) throw new Error(`Description of the command '${command.name}' is missing when registering.`);
+  else if (!command.args) throw new Error(`Arguments of the command '${command.name}' is missing when registering.`);
+  else if (!command.permission) throw new Error(`Permission of the command '${command.name}' is missing when registering.`);
+  else if (!callback) throw new Error(`Callback of the command '${command.name}' is missing when registering.`);
+
   // Check if command arguments are optional, if one is optional, the rest have to be optional, or else throw error. 
   // for example, if there are 5 arguments and the first one is optional, the rest have to be optional.
   const optionalIndex = getOptionalIndex(command.args);
@@ -285,4 +292,4 @@ class ChatCommandBuilder<T extends Record<string, CommandArgumentData>> {
   }
 }
 
-export { registerChatCommand, CommandData, CommandResponse, CommandArgumentString, CommandArgumentNumber, CommandArgumentBool, ChatCommandBuilder };
+export { registerChatCommand, CommandData, CommandResponse, CommandArgumentString, CommandArgumentNumber, CommandArgumentBool, ChatCommandBuilder, CommandArgumentData };

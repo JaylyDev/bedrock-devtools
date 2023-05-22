@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "rootDir": "./src",
     "outDir": "./behavior_pack/scripts",
 
     "pretty": true,
@@ -28,7 +27,9 @@
 
     "types": [],
     "sourceMap": true,
+
+    "baseUrl": "lib"
   },
-  "include": ["src"],
+  "include": ["src", "lib"],
   "exclude": ["scripts", "node_modules"]
 }

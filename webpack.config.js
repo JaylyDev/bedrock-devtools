@@ -1,5 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
+const { TsconfigPathsPlugin } = require('tsconfig-paths-webpack-plugin');
 
 const CopyrightNotice = `Copyright (c) Jayly. All rights reserved.
 Licensed under the Apache License, Version 2.0.
@@ -26,13 +27,10 @@ module.exports = {
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
+    plugins: [ new TsconfigPathsPlugin() ]
   },
   plugins: [
     new webpack.BannerPlugin(CopyrightNotice),
-    new webpack.SourceMapDevToolPlugin({
-      filename: filename + '.map',
-      moduleFilenameTemplate: '[absolute-resource-path]',
-    }),
   ],
   optimization: {
     minimize: false,

@@ -1,13 +1,30 @@
-import { GameMode, Player, TicksPerSecond } from "@minecraft/server"
-import { UseDebugStickInCreativeOnly } from "./DebugStick/DebugStick";
-import { getGamemode } from "./get-gamemode";
+import { Entity, GameMode, MinecraftDimensionTypes, Player, TicksPerSecond, world } from "@minecraft/server"
+import { UseDebugStickInCreativeOnly } from "../DebugStick/itemStack";
+import { getGamemode } from "get-gamemode";
 
 declare module "@minecraft/server" {
+  interface Entity {
+    /**
+     * Returns false if the entity has died or been despawned for some other reason.
+     */
+    isValid(): boolean;
+    lastLocation?: Vector3;
+  }
   interface Player {
+    // Debug stick data
     cooldown?: number;
     stateIndex?: number;
     blockType?: string;
+    // Spectate data
+    previousGameMode?: GameMode;
+    spectateTarget?: Entity;
   }
+};
+
+Entity.prototype.isValid = function isValid () {
+  return world.getDimension(MinecraftDimensionTypes.overworld)
+              .getEntities()
+              .findIndex(entity => entity === this) > -1;
 };
 
 /**

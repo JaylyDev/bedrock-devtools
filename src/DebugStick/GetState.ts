@@ -1,21 +1,20 @@
 import { EntityInventoryComponent, Player, world } from "@minecraft/server";
 import { getBlockState } from "./BlockStates";
-import { DebugStick } from "./DebugStick";
-import { errorText, playerCanUseDebugStick } from "../PlayerData";
+import { DebugStick } from "./itemStack";
+import { errorText, playerCanUseDebugStick } from "../util";
 
 // Using entityHit to listen for the stick being hit on a block
 world.afterEvents.entityHit.subscribe((event) => {
   const { entity, hitBlock } = event;
   if (!(entity instanceof Player) || !hitBlock) return;
-  if (!playerCanUseDebugStick(entity)) {
-    entity.onScreenDisplay.setActionBar(errorText);
-    return;
-  };
-
   const inventory = entity.getComponent(EntityInventoryComponent.componentId) as EntityInventoryComponent;
   const selectedItem = inventory.container.getItem(entity.selectedSlot);
 
   if (selectedItem?.typeId !== DebugStick) return;
+  else if (!playerCanUseDebugStick(entity)) {
+    entity.onScreenDisplay.setActionBar(errorText);
+    return;
+  };
 
   const blockState = getBlockState(hitBlock, entity);
   

@@ -1,7 +1,11 @@
 import { system, world } from "@minecraft/server";
-import { ChatCommandBuilder, CommandArgumentString, CommandResponse } from "./handler";
+import { ChatCommandBuilder, CommandArgumentString, CommandResponse } from "chat-command";
 
-export async function execute(response: CommandResponse<Record<string, CommandArgumentString>>) {
+interface ChatCommandParams extends Record<string, CommandArgumentString> {
+  player: CommandArgumentString
+};
+
+export async function execute(response: CommandResponse<ChatCommandParams>) {
   const { player: playerName } = response.params;
   const { sender } = response;
   const { x, y, z } = sender.location;
@@ -14,7 +18,7 @@ export async function execute(response: CommandResponse<Record<string, CommandAr
   });
 };
 
-export const data = new ChatCommandBuilder<{ player: CommandArgumentString }>()
+export const data = new ChatCommandBuilder<ChatCommandParams>()
   .withName("!tphere")
   .withDescription("Teleport a player to current player position.")
   .withPermission(true)

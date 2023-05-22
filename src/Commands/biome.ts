@@ -1,5 +1,5 @@
 import { Player, world } from "@minecraft/server";
-import { ChatCommandBuilder, CommandResponse } from "./handler";
+import { ChatCommandBuilder, CommandResponse } from "chat-command";
 
 enum Biome {
   ocean = 0,

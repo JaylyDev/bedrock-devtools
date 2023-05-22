@@ -1,8 +1,8 @@
 import { Block, Player, system, world } from "@minecraft/server";
 import { getBlockState } from "./BlockStates";
 import { BlockStates } from "@minecraft/server";
-import { MsPerTick, playerCanUseDebugStick, hasCooldown, setCooldown, errorText } from "../PlayerData";
-import { DebugStick } from "./DebugStick";
+import { MsPerTick, playerCanUseDebugStick, hasCooldown, setCooldown, errorText } from "../util";
+import { DebugStick } from "./itemStack";
 
 function changeBlockState(block: Block, state: string, value: string | number | boolean, player: Player) {
   const validStates = BlockStates.get(state).validValues;

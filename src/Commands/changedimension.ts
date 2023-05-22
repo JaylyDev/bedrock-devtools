@@ -1,5 +1,5 @@
 import { MinecraftDimensionTypes, system, world } from "@minecraft/server";
-import { ChatCommandBuilder, CommandArgumentString, CommandResponse } from "./handler";
+import { ChatCommandBuilder, CommandArgumentString, CommandResponse } from "chat-command";
 export async function execute(response: CommandResponse<Record<string, CommandArgumentString>>) {
     const { dimension } = response.params;
     const { sender } = response;
@@ -11,7 +11,7 @@ export async function execute(response: CommandResponse<Record<string, CommandAr
     });
 }
 ;
-export const data = new ChatCommandBuilder()
+export const data = new ChatCommandBuilder<Record<string, CommandArgumentString>>()
     .withName("!changedimension")
     .withDescription("Teleport player to another dimension.")
     .withPermission(true)
