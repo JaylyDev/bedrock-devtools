@@ -1,6 +1,6 @@
 {
   "name": "bedrock-devtools",
-  "version": "0.1.1-beta",
+  "version": "0.1.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@minecraft/server": "^1.2.0-beta.1.19.80-stable",
-    "@minecraft/vanilla-data": "^1.20.0-preview.21"
+    "@minecraft/vanilla-data": "^1.19.80"
   },
   "devDependencies": {
     "source-map": "^0.7.4",

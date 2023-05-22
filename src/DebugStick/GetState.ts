@@ -7,15 +7,14 @@ import { errorText, playerCanUseDebugStick } from "../PlayerData";
 world.events.entityHit.subscribe((event) => {
   const { entity, hitBlock } = event;
   if (!(entity instanceof Player) || !hitBlock) return;
-  if (!playerCanUseDebugStick(entity)) {
-    entity.onScreenDisplay.setActionBar(errorText);
-    return;
-  };
-
   const inventory = entity.getComponent(EntityInventoryComponent.componentId) as EntityInventoryComponent;
   const selectedItem = inventory.container.getItem(entity.selectedSlot);
 
   if (selectedItem?.typeId !== DebugStick) return;
+  else if (!playerCanUseDebugStick(entity)) {
+    entity.onScreenDisplay.setActionBar(errorText);
+    return;
+  };
 
   const blockState = getBlockState(hitBlock, entity);
   
